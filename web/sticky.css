@@ -1,0 +1,243 @@
+
+/* Flexbox Layout Container */
+#anki-sticky-container{
+  width:100%;
+  /* display: flex; */
+  max-width:1920px;
+}
+/* Sticky Card */
+.anki-sticky {
+  color: #171717;
+  margin: 8px;
+  padding: 16px;
+  padding-bottom: 24px;
+  border: none;
+  text-align: left;
+  border-radius: 12px;
+  /* box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 8px; */
+  opacity: 1;
+  font-family: "Inter", "DejaVu Sans", "Liberation Sans", "Ubuntu", Arial,
+    Helvetica, sans-serif !important;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  width: 300px;
+  line-height: 1.5;
+  position:relative;
+  /* transition: box-shadow 0.2s ease; */
+}
+
+/* .anki-sticky:hover {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 12px;
+} */
+
+/* Controls */
+.sticky-controls {
+  position: absolute;
+  bottom: 0px;
+  right: 8px;
+  display: flex;
+  gap: 0px;
+  align-items: center;
+  z-index: 10;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.anki-sticky:hover .sticky-controls {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Button Design */
+.sticky-btn {
+  padding: 8px 16px;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  font-size: 12px;
+  transition: all 150ms ease-in-out;
+  border-radius: 1200px;
+  box-shadow: rgba(255, 255, 255, 0.2) 0 1px 1px 0 inset,
+    0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
+    rgba(0, 0, 0, 0.9) 0px 0px 0px 1px;
+  background: linear-gradient(180deg, #404146 0%, #272729 100%);
+  cursor: pointer;
+}
+.sticky-btn:hover {
+  background: linear-gradient(180deg, #505156 0%, #373739 100%);
+  transform: none;
+  transition: none;
+}
+
+/* Content Styling */
+.sticky-content {
+  padding-right: 24px;
+  line-height: 1.5;
+  /* font-size: 14px !important; */
+  /* font-family: inherit !important; */
+  /* font-weight: normal !important; */
+}
+
+.sticky-content *,
+.sticky-content h1,
+.sticky-content h2,
+.sticky-content h3,
+.sticky-content p,
+.sticky-content div,
+.sticky-content span,
+.sticky-content li,
+.sticky-content a {
+  font-family: inherit !important;
+}
+
+.sticky-content hr{
+  border: none;
+  border-top: 1px solid #171717;
+  margin: 8px 0;
+}
+.sticky-content h1,
+.sticky-content h2,
+.sticky-content h3 {
+  margin: 0 0 8px 0;
+  font-weight: 600 !important;
+  color: #222;
+}
+
+/* .sticky-content h1 {
+  font-size: 1.3em !important;
+}
+
+.sticky-content h2 {
+  font-size: 1.2em !important;
+}
+
+.sticky-content h3 {
+  font-size: 1.1em !important;
+} */
+
+.sticky-content strong {
+  font-weight: 600 !important;
+  color: #000;
+}
+
+.sticky-content em {
+  font-style: italic !important;
+  color: #444;
+}
+
+.sticky-content code {
+  background-color: #f5f5f5;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-family: "Liberation Mono", "DejaVu Sans Mono", "Ubuntu Mono",
+    "Courier New", Courier, monospace !important;
+  font-size: 0.9em !important;
+}
+
+.sticky-content ul {
+  margin: 6px 0;
+  padding-left: 20px;
+}
+
+.sticky-content li {
+  margin: 4px 0;
+}
+
+.sticky-content a {
+  color: #1976d2;
+  text-decoration: none;
+}
+
+.sticky-content a:hover {
+  text-decoration: underline;
+}
+
+/* Color Variations */
+.anki-yellow {
+  background-color: #fff9c4;
+}
+
+.anki-green {
+  background-color: #dcfce7;
+}
+
+.anki-blue {
+  background-color: #dbeafe;
+}
+
+.anki-pink {
+  background-color: #fce7f3;
+}
+
+.anki-purple {
+  background-color: #f3e8ff;
+}
+
+.anki-orange {
+  background-color: #fed7aa;
+}
+
+/* Subtle Animation for Visual Appeal */
+.anki-sticky {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.anki-sticky:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.anki-sticky:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.anki-sticky:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Container Title */
+.container-header {
+  text-align: center;
+  margin-bottom: 32px;
+  color: white;
+}
+
+.container-title {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+.container-subtitle {
+  font-size: 16px;
+  opacity: 0.8;
+  margin: 8px 0 0 0;
+  font-weight: 400;
+}
+
+/* Auto-sizing for different content lengths */
+.anki-sticky.compact {
+  grid-row-end: span 1;
+}
+
+.anki-sticky.medium {
+  grid-row-end: span 2;
+}
+
+.anki-sticky.large {
+  grid-row-end: span 3;
+}
