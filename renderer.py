@@ -1,6 +1,8 @@
 # renderer.py
+from aqt import mw
 from .storage import get_stickies
 import html, re
+from pathlib import Path
 
 def markdown_to_html(text: str) -> str:
     if not text:
@@ -70,22 +72,38 @@ def render_stickies_for_card(card):
     if not stickies:
         return ""
 
-    html = '''
-    <link rel="stylesheet" href="_sticky.css">
-    <script src="_packery.min.js"></script>
-    <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const grid = document.querySelector("#anki-sticky-container");
-        if (grid) new Packery(grid, {itemSelector: ".anki-sticky", gutter: 8});
-    });
-    function edit(i){pycmd("stickyEdit:"+i)}
-    function del(i){confirm("Delete?") && pycmd("stickyDelete:"+i)}
-    </script>
+    addon_package = mw.addonManager.addonFromModule(__name__)
 
+    html = f'''
+    <link rel="stylesheet" href="/_addons/{addon_package}/web/sticky.css">
+    <script src="/_addons/{addon_package}/web/packery.min.js"></script>
+    <script type="text/javascript">
+    (function() {{
+        document.addEventListener("DOMContentLoaded", function() {{
+            var grid = document.querySelector("#anki-sticky-container");
+            if (grid) {{
+                new Packery(grid, {{
+                    itemSelector: ".anki-sticky",
+                    gutter: 8
+                }});
+            }}
+        }});
+        
+        window.edit = function(i) {{
+            pycmd("stickyEdit:" + i);
+        }};
+        
+        window.del = function(i) {{
+            if (confirm("Delete this sticky note?")) {{
+                pycmd("stickyDelete:" + i);
+            }}
+        }};
+    }})();
+    </script>
     <div class="container-header">
-        <h2 class="container-title" style="">Sticky Notes</h2>
+        <h2 class="container-title">Sticky Notes</h2>
     </div>
-    <div id="anki-sticky-container" data-packery='{ "itemSelector": ".anki-sticky", "gutter": 8 }'>
+    <div id="anki-sticky-container" data-packery='{{"itemSelector": ".anki-sticky", "gutter": 8}}'>
     '''
 
     colors = {"yellow":"anki-yellow","green":"anki-green","blue":"anki-blue","pink":"anki-pink","purple":"anki-purple","orange":"anki-orange"}

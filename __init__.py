@@ -8,15 +8,22 @@ from .dialog import StickyDialog
 from .renderer import render_stickies_for_card
 from .storage import init_storage, get_stickies as get, save_stickies as put
 import os, shutil
+from pathlib import Path
 
-def copy_assets():
-    src = os.path.join(os.path.dirname(__file__), "web")
-    dst = mw.col.media.dir()
-    for f in ["packery.min.js", "sticky.css"]:
-        if os.path.exists(os.path.join(src, f)):
-            shutil.copy2(os.path.join(src, f), os.path.join(dst, "_" + f))
+addon_dir = Path(__file__).parent
 
-gui_hooks.profile_did_open.append(lambda: (init_storage(), copy_assets()))
+# Register web directory with Anki's web server
+def setup_web_exports():
+    addon_package = mw.addonManager.addonFromModule(__name__)
+    web_dir = addon_dir / "web"
+    
+    # This makes files accessible via /_addons/your_addon_name/filename
+    mw.addonManager.setWebExports(addon_package, r"web/.*")
+
+# Call this when addon initializes
+setup_web_exports()
+
+gui_hooks.profile_did_open.append(lambda: (init_storage()))
 
 def inject(html, card, kind):
     if kind == "reviewAnswer":
