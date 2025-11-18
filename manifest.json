@@ -1,0 +1,10 @@
+{
+    "package": "sticky_notes",
+    "name": "Sticky Notes for Anki",
+    "author": "Ankit Upadhyay",
+    "homepage": "https://github.com/Ankitupa007/anki-stickynotes/",
+    "conflicts": [],
+    "mod": 0,
+    "min_point_version": 66,
+    "max_point_version": 0
+}

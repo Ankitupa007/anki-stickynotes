@@ -1,94 +1,115 @@
-# Sticky Notes for Anki – The Ultimate Markdown Sticky Notes Add-on
+# 🟨 Sticky Notes Add-on for Anki Desktop
 
-**The most beautiful, and user-friendly sticky notes add-on made for Anki.**
+**A powerful Markdown-enabled sticky notes add-on for Anki with an intuitive visual editor.**
 
 ![Preview](https://i.imgur.com/0example.png)
 
-### Features
+## Features
 
-- **Full Markdown Support** — Write beautiful notes with:
-  - **Bold**, _Italic_, ~~Strikethrough~~, `Inline Code`
-  - # Headings (H1, H2, H3)
-  - Bullet lists
-  - Links `[text](https://)`
-  - Horizontal rules `---`
-- **Obsidian/Typora-style Toolbar** — 9 intuitive buttons with real-time toggle highlighting
-  - Click **B** on empty line → `**|**` (cursor ready to type)
-  - Select text → click **B** → instantly wrapped
-  - Click again → removes formatting
-  - Headings & lists use smart prefix toggle (never adds closing tags)
-- **Live Preview** — See exactly how your note will look on the card
-- **Full Customization**
-  - 6 gorgeous colors (yellow, green, blue, pink, purple, orange)
-  - Adjustable font size, font family, width, and height
-- **Packery Layout** — Notes automatically arrange beautifully (no overlap, perfect flow)
-- **Per-Note Storage** — Each card can have unlimited sticky notes
-- **Keyboard Shortcut** — Press `Ctrl+Shift+S` to add/edit notes instantly
-- **Toggle Visibility** — Hide/show all notes with one click
-- **Export/Import** — Backup and share your notes
-- **100% Compatible** — Works perfectly on Anki 2.1.66+ (including latest 25.09+ with Qt6)
+### Rich Markdown Support
 
-### Installation
+Write notes with full Markdown formatting:
 
-1. Download the latest `.ankiaddon` file
-2. In Anki → Tools → Add-ons → "Install from file..."
-3. Restart Anki
-4. Press `Ctrl+Shift+S` on any card to create your first sticky note!
+- **Bold**, _Italic_, ~~Strikethrough~~, `Inline Code`
+- Headings (H1, H2, H3)
+- Bullet lists
+- Links `[text](https://)`
+- Horizontal rules `---`
 
-### Usage
+### Smart Visual Editor
 
-- **Add/Edit Note**: `Ctrl+Shift+S` (or right-click → "Sticky Notes" → "Add/Edit")
-- **Toggle All Notes**: Click the sticky note icon in the reviewer toolbar
-- **Delete Note**: Open editor → click "Delete"
-- **Resize/Move**: Drag the corners or edges of any note on the card
+The toolbar provides context-aware formatting controls with real-time feedback:
 
-### Keyboard Shortcuts (in editor)
+- Click formatting buttons on empty lines to insert ready-to-use templates
+- Select text and click to instantly wrap it with formatting
+- Toggle formatting on/off with a second click
+- Intelligent prefix handling for headings and lists
 
-- `Ctrl+B` → Bold
-- `Ctrl+I` → Italic
-- `Ctrl+Shift+S` → Strikethrough
-- `Ctrl+1/2/3` → Heading 1/2/3
-- `Ctrl+L` → Insert Link
+### Live Preview
 
-### Why This Add-on Is Special
+See exactly how your note will appear on the card as you type.
 
-Most sticky note add-ons are basic. This one is **different**.
+### Customization Options
 
-This isn’t just sticky notes.  
-This is **Obsidian inside Anki**.
+- 6 color themes: yellow, green, blue, pink, purple, orange
+- Adjustable font size and family
+- Configurable width and height
+- Per-card stikcy note storage (unlimited sticky notes per card)
 
-You no longer have to choose between beautiful formatting and functionality — you get both.
+### Automatic Layout
 
-Whether you're a medical student adding quick explanations, a language learner writing example sentences, or a power user organizing complex cards — **this add-on changes everything**.
+Notes arrange themselves cleanly using Packery layout—no overlaps, no manual positioning required.
 
-### Screenshots
+### Workflow Tools
 
-_(Coming soon — featuring:)_
+- **Keyboard shortcut**: `Ctrl+Shift+S` to add/edit notes
+- **Quick toggle**: Show/hide all notes with one click
+- **Export/Import**: Back up and share your notes
+- **Compatible**: Works with Anki 2.1.66+ including the latest Qt6 versions (25.09+)
 
-- Dark & light mode perfection
-- Multiple overlapping notes with Packery
-- Live Markdown toolbar in action
-- Gorgeous color themes
+## Installation
 
-### Credits & Thanks
+1. Download the `.ankiaddon` file from the releases page
+2. In Anki, go to Tools → Add-ons → Install from file...
+3. Select the downloaded file
+4. Restart Anki
+5. Press `Ctrl+Shift+S` on any card to create your first note
 
-- Built with love using PyQt6, Packery.js, and pure passion
-- Markdown parser: custom lightweight & fast
-- Tested on Windows, macOS, Linux (Anki 25.09+)
+## Usage
 
-### Support the Project
+### Basic Operations
 
-Love this add-on?  
-Star it. Share it. Tell your study group.
+- **Add/Edit Note**: Press `Ctrl+Shift+S` or right-click → Sticky Notes → Add/Edit
+- **Toggle Visibility**: Click the sticky note icon in the reviewer toolbar
+- **Delete Note**: Open the editor and click Delete
+- **Resize/Move**: Drag the corners or edges of any note
 
-And if you want to support future development:  
-[Buy me a coffee](https://buymeacoffee.com/yourname) (coming soon)
+### Editor Shortcuts (Coming soon)
+
+- `Ctrl+B` — Bold
+- `Ctrl+I` — Italic
+- `Ctrl+Shift+S` — Strikethrough
+- `Ctrl+1/2/3` — Heading 1/2/3
+- `Ctrl+L` — Insert Link
+
+## Use Cases
+
+This add-on works well for:
+
+- **Medical students** adding quick explanations or mnemonics to complex diagrams
+- **Language learners** writing example sentences or grammar notes
+- **General study** organizing supplementary information without editing the original card
+
+The Markdown support means you can maintain clean, readable formatting without cluttering your card templates.
+
+## Technical Details
+
+- Built with PyQt6 and Packery.js
+- Lightweight custom Markdown parser
+- Tested on Windows, macOS, and Linux
+- Compatible with Anki 2.1.66+ (including Qt6 versions)
+
+## Screenshots
+
+_(Additional screenshots showing various features will be added here)_
+
+## Support
+
+If you encounter issues or have suggestions:
+
+- Check the issues page on GitHub
+- Report bugs with your Anki version and system details
+
+## License
+
+This add-on is free and open source.
+
+
+## Donate to the developer
+
+If you think this add-on is worth paying for, buy the developer some tea or coffee.
+Here are the payment information
 
 ---
 
-Welcome to the future of note-taking in Anki.
-
-Now go study like a legend.
-
-Made with love for the Anki community  
-© 2025 — Forever free. Forever yours.
+**Contributions and feedback are welcome.**
