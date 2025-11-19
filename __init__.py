@@ -77,13 +77,6 @@ def add_top_level_menu():
     sticky_menu = QMenu("&Sticky Notes", mw)  # &S makes Alt+S the shortcut
     mw.form.menubar.addMenu(sticky_menu)
 
-    # About action
-    about_act = QAction("About Sticky Notes…", mw)
-    about_act.triggered.connect(show_about_dialog)
-    sticky_menu.addAction(about_act)
-
-    sticky_menu.addSeparator()
-
     # Export action
     export_act = QAction("Export Sticky Notes from Deck…", mw)
     export_act.setShortcut("Ctrl+Alt+E")  # optional shortcut
@@ -96,11 +89,10 @@ def add_top_level_menu():
     import_act.triggered.connect(choose_deck_and_import)
     sticky_menu.addAction(import_act)
 
-    # Optional: Add a link to documentation or GitHub
-    sticky_menu.addSeparator()
-    docs_act = QAction("Documentation & GitHub", mw)
-    docs_act.triggered.connect(lambda: QDesktopServices.openUrl(QUrl("https://github.com/Ankitupa007/anki-stickynotes")))
-    sticky_menu.addAction(docs_act)
+    # About action
+    about_act = QAction("About Sticky Notes…", mw)
+    about_act.triggered.connect(show_about_dialog)
+    sticky_menu.addAction(about_act)
 
 
 def show_upi_info():
