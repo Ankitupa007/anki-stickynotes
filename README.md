@@ -1,61 +1,75 @@
 # 🟨 Sticky Notes Add-on for Anki Desktop
 
-**A powerful Markdown-enabled sticky notes add-on for Anki with an intuitive live preview editor.**
+**A powerful, Markdown-enabled sticky notes add-on for Anki with an intuitive live preview editor.**
 
-![Preview](https://i.imgur.com/0example.png)
+![Preview](https://i.imgur.com/UCyItw0.jpeg)
+
+## Installation
+
+Install via [AnkiWeb]() or [GitHub Releases](https://github.com/Ankitupa007/anki-stickynotes/releases).
+
+1. Download the `.ankiaddon` file from the Releases page or install via AnkiWeb.
+2. In Anki, go to **Tools → Add-ons → Install from file...**
+3. Select the downloaded file.
+4. Restart Anki.
+5. Press **`Ctrl+Shift+S`** on any card review/answer screen to create your first note.
+
+## How to Use
+
+To use this add-on, simply install it from AnkiWeb or GitHub Releases and follow the steps below:
+
+- After installing the add-on, restart Anki Desktop.
+- Visit the card where you want to add sticky notes, and open the **review or answer screen** (back side of the card).
+- Press **`Ctrl+Shift+S`** to add a sticky note (you can also find the **Add Sticky Note** button under the **More** menu in the bottom-right corner).
+- This will open the sticky notes live preview Markdown editor.
+- Create your sticky note and press **Save** to add it to the review screen.
+- Later, hover over the card to see the **Edit** and **Delete** options for the sticky note.
 
 ## Features
 
 ### Rich Markdown Support
 
-Write notes with full Markdown formatting:
+Write notes using full Markdown formatting:
 
 - **Bold**, _Italic_, ~~Strikethrough~~, `Inline Code`
-
 - Headings (H1, H2, H3)
-
 - Bullet lists
+- Links `[text](https://...)`
+- Horizontal rules (`---`)
 
-- Links `[text](https://)`
+### Smart Visual Editor with Markdown Toolbar
 
-- Horizontal rules `---`
+![Preview](https://i.imgur.com/Bm5p7tK.jpeg)
 
-### Smart Visual Editor with Markdown toolbar
+The editor provides a live preview of your sticky notes as you write:
 
-![Preview](https://i.imgur.com/0example.png)
-
-The editor provides live preview of sticky notes while you make it:
-
-- Select text and click to instantly wrap it with formatting.
-- Toggle formatting on/off with a second click on toolbar button.
+- Select text and click a toolbar button to instantly wrap it in formatting.
+- Toggle formatting on/off with a second click.
 
 ### Live Preview
 
 See exactly how your note will appear on the card as you type.
-![Preview](https://i.imgur.com/0example.png)
 
 ### Customization Options
 
-- 6 color themes: yellow, green, blue, pink, purple, orange.
+- Six color themes: yellow, green, blue, pink, purple, orange
+- Adjustable font size and family
+- Configurable sticky note width and height
 
-- Adjustable font size and family.
+### Sticky Notes Storage & Syncing (IMPORTANT)
 
-- Configurable width and height of sticky note.
+Your sticky notes data is stored inside your Anki profile's **collection.media** folder. These files sync along with your media.
 
-### Sticky Notes Storage
+However, this approach has one drawback:
+**Sticky notes cannot be searched in the Card Browser.**
 
-Your sticky notes data is stored within collection.media folder of your Anki profile, which get synced along with your media files.
+I chose this method because making sticky notes searchable would require adding an extra `StickyNotes` field to every note type, which would break updates for shared decks on AnkiHub—deck updates are controlled through fields.
 
-However, this approach has a drawback which is not being able to search sticky notes in Card Browser.
+If someone finds a solution, please submit a PR or share suggestions.
 
-I had to chose this because to make sticky notes searchable in card browser, I would have to add another extra 'StickyNotes' field to the note type. This could've break the updates for shared deck on AnkiHub, since deck updates are controlled through fields in shared deck from AnkiHub.
+Since all sticky notes are stored in a single `_sticky.json` file inside the media folder, the notes sync correctly.
 
-If anyone who can find a way to solve this problem, please add a PR or give your suggestions.
-
-Now, since sticky notes data is stored in a single \_sticky.JSON file in media folder, it can be synced.
-
-Sticky Notes are stored in this format in JSON.
-Here are 2 sticky notes attached to one card with ID `1763368231436`.
+Here is an example of sticky notes stored for a card with ID `1763368231436`:
 
 ```json
 {
@@ -82,114 +96,62 @@ Here are 2 sticky notes attached to one card with ID `1763368231436`.
 
 ### Import & Export Sticky Notes
 
-Sticky Notes can be imported and exported as JSON files with respected to decks. You can specifically import or export all the sticky notes of a particular deck.
+Sticky notes can be imported or exported as JSON files, specific to decks. You can import/export all sticky notes belonging to a particular deck.
 
 ### Automatic Grid Layout
 
-Notes arrange themselves cleanly using Grid layout—no overlaps, no manual positioning required.
-To achieve this I used [PackeryJS](https://packery.metafizzy.co/), that can automatically spread sticky notes into _Bento_ layout.
+Notes are automatically arranged using a clean grid layout—no overlaps, no manual dragging required.
 
-## Installation
+This is powered by **PackeryJS**, which creates a Bento-style layout automatically.
 
-1. Download the `.ankiaddon` file from the releases page
+## Workflow
 
-2. In Anki, go to Tools → Add-ons → Install from file...
-
-3. Select the downloaded file
-
-4. Restart Anki
-
-5. Press `Ctrl+Shift+S` on any card to create your first note
-
-## How to use
-
-To use this add-on simply Install it from AnkiWeb or use the above guide to install it from Github releases.
-
-Follow these instructions:
-
-- After installing the add-on, restart your Anki Desktop.
-- Visit the card where you want to add the sticky notes, Open the review or answer screen (back side of the card).
-- Press `CTRL+SHIFT+S` to add sticky notes (You can also find the `add sticky note` button in the `more` option in the _bottom right corner_ of review screen)
-- This will open the sticky notes live preview markdown editor.
-- Create your beautiful sticky note, and press `save` to add it to the review screen of the card.
-- Later, on hovering to the card, you can see use two functions to `edit` and `delete` the card.
-
-## Workflow Tools
-
-- **Keyboard shortcut**: `Ctrl+Shift+S` on review answer screen to add sticky notes or to open sticky notes editor.
-
-- **Export/Import**: Back up and share your notes
-
-- **Compatible**: Works with Anki 2.1.66+ including the latest Qt6 versions (25.09+)
-
-## Usage
+- **Keyboard shortcut:** `Ctrl+Shift+S` on the review/answer screen to add or open sticky notes.
+- **Export/Import:** Back up and share your notes.
+- **Compatibility:** Works with Anki 2.1.66+ including the latest Qt6 versions (25.09+).
 
 ### Basic Operations
 
-- **Add/Edit Note**: Press `Ctrl+Shift+S` or right-click → Sticky Notes → Add/Edit
-
-- **Toggle Visibility**: Click the sticky note icon in the reviewer toolbar
-
-- **Delete Note**: Open the editor and click Delete
-
-- **Resize/Move**: Drag the corners or edges of any note
-
-### Editor Shortcuts (Coming soon)
-
-- `Ctrl+B` — Bold
-
-- `Ctrl+I` — Italic
-
-- `Ctrl+Shift+S` — Strikethrough
-
-- `Ctrl+1/2/3` — Heading 1/2/3
-
-- `Ctrl+L` — Insert Link
+- **Add Note:** `Ctrl+Shift+S` or right-click → Sticky Notes → Add
+- **Delete Note:** Hover over the card for the Delete button, or open the editor and click **Delete**
 
 ## Use Cases
 
-This add-on works well for:
+This add-on is great for:
 
-- **Medical students** adding quick explanations or mnemonics to complex diagrams
+- **Students** adding quick explanations or mnemonics to complex diagrams
+- **Language learners** adding example sentences or grammar notes
+- **General study** adding supplementary information without modifying the original card
 
-- **Language learners** writing example sentences or grammar notes
-
-- **General study** organizing supplementary information without editing the original card
-
-The Markdown support means you can maintain clean, readable formatting without cluttering your card templates.
+Markdown support ensures clean and readable formatting without cluttering card templates.
 
 ## Technical Details
 
 - Built with PyQt6 and Packery.js
-
 - Lightweight custom Markdown parser
-
-- Tested on Windows, macOS, and Linux
-
+- Tested on Windows and macOS
 - Compatible with Anki 2.1.66+ (including Qt6 versions)
-
-## Screenshots
-
-_(Additional screenshots showing various features will be added here)_
-
-## Support
-
-If you encounter issues or have suggestions:
-
-- Check the issues page on GitHub
-
-- Report bugs with your Anki version and system details
 
 ## License
 
 This add-on is free and open source.
 
-## Donate to the developer
+## Support the Development
 
-If you think this add-on is worth paying for, buy the developer some tea or coffee.
+I am a solo developer dedicating my time to create and maintain this add-on for the Anki community.
 
-Here are the payment information
+If you find this add-on helpful, please consider supporting its development.
+
+**Indian patrons:**
+UPI ID: `ankit.upa007@oksbi`
+
+**International patrons:**
+PayPal: [paypal.me/thisisankitupadhyay](https://paypal.me/thisisankitupadhyay)
 
 ---
 
 **Contributions and feedback are welcome.**
+Report bugs, request features, or submit a PR.
+For contact, email: **[theankitnet@gmail.com](mailto:theankitnet@gmail.com)**
+
+---
