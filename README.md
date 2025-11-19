@@ -6,13 +6,18 @@
 
 ## Installation
 
-Install via [AnkiWeb]() or [GitHub Releases](https://github.com/Ankitupa007/anki-stickynotes/releases).
+Install via [AnkiWeb](https://ankiweb.net/shared/info/2073533957?cb=1763560370576) or [GitHub Releases](https://github.com/Ankitupa007/anki-stickynotes/releases).
 
 1. Download the `.ankiaddon` file from the Releases page or install via AnkiWeb.
 2. In Anki, go to **Tools → Add-ons → Install from file...**
 3. Select the downloaded file.
 4. Restart Anki.
 5. Press **`Ctrl+Shift+S`** on any card review/answer screen to create your first note.
+
+To download this add-on, please copy and paste the following code into Anki 2.1:
+2073533957
+
+If you were linked to this page from the internet, please open Anki on your computer, go to the Tools->Add-ons menu item, then click on Get Add-ons and paste in the code.
 
 ## How to Use
 
