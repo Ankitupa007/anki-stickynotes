@@ -1,6 +1,7 @@
 
 /* Flexbox Layout Container */
 #anki-sticky-container{
+  margin-top: 2rem;
   width:100%;
   /* display: flex; */
   max-width:1920px;

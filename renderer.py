@@ -100,9 +100,6 @@ def render_stickies_for_card(card):
         }};
     }})();
     </script>
-    <div class="container-header">
-        <h2 class="container-title">Sticky Notes</h2>
-    </div>
     <div id="anki-sticky-container" data-packery='{{"itemSelector": ".anki-sticky", "gutter": 8}}'>
     '''
 

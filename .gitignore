@@ -1,0 +1,4 @@
+# Ignore Python bytecode files and __pycache__ directories  
+__pycache__/          # Ignore all __pycache__ directories (recursive)  
+*.py[cod]             # Ignore .pyc, .pyo, .pyd files (covers older Python versions)  
+*$py.class            # Ignore .py.class files (for Jython)  
