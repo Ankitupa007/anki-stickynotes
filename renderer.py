@@ -1,70 +1,15 @@
 # renderer.py
 from aqt import mw
 from .storage import get_stickies
+from . import markdown2
 import html, re
 from pathlib import Path
 
 def markdown_to_html(text: str) -> str:
     if not text:
         return ""
-
-    text = html.escape(text).strip()
-
-    # === Headers ===
-    text = re.sub(r'^### (.*?)$', r'<h3>\1</h3>', text, flags=re.M)
-    text = re.sub(r'^## (.*?)$', r'<h2>\1</h2>', text, flags=re.M)
-    text = re.sub(r'^# (.*?)$', r'<h1>\1</h1>', text, flags=re.M)
-
-    # === Bold / Italic / Bold-Italic ===
-    text = re.sub(r'\*\*\*(.*?)\*\*\*', r'<strong><em>\1</em></strong>', text)
-    text = re.sub(r'___(.*?)___', r'<strong><em>\1</em></strong>', text)
-    text = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', text)
-    text = re.sub(r'__(.*?)__', r'<strong>\1</strong>', text)
-    text = re.sub(r'\*(.*?)\*', r'<em>\1</em>', text)
-    text = re.sub(r'_(.*?)_', r'<em>\1</em>', text)
-
-    # === Strikethrough ===
-    text = re.sub(r'~~(.*?)~~', r'<del>\1</del>', text)
-
-    # === Inline Code ===
-    text = re.sub(r'`([^`]+)`', r'<code style="background:#171717;color:#fff;padding:2px 6px;border-radius:4px;font-family:monospace;">\1</code>', text)
-
-    # === Links ===
-    text = re.sub(r'\[([^]]+)\]\(([^)]+)\)', r'<a href="\2" style="color:#1976d2;text-decoration:underline;" target="_blank">\1</a>', text)
-
-    # === Horizontal Rule ===
-    text = re.sub(r'^---\s*$', r'<hr style="border:0;border-top:1px solid #171717;margin:10px 0;">', text, flags=re.M)
-
-    # === Lists (unordered) ===
-    lines = text.split('\n')
-    in_list = False
-    result = []
-
-    for line in lines:
-        stripped = line.lstrip()
-        indent = len(line) - len(stripped)
-
-        if stripped.startswith(('- ', '* ', '• ')):
-            item = stripped[2:].strip()
-            if not in_list:
-                result.append('<ul style="margin:8px 0;padding-left:20px;">')
-                in_list = True
-            result.append(f'<li>{item}</li>')
-        else:
-            if in_list:
-                result.append('</ul>')
-                in_list = False
-            result.append(line)
-    
-    if in_list:
-        result.append('</ul>')
-
-    text = '\n'.join(result)
-
-    # === Final line breaks (but preserve list spacing) ===
-    text = re.sub(r'(?<!>)\n(?!\s*(</ul>|</?li>))', '<br>', text)
-
-    return text
+    # Use markdown2 with extras for better compatibility
+    return markdown2.markdown(text, extras=["fenced-code-blocks", "tables", "break-on-newline", "cuddled-lists", "strike"]).strip()
 
 
 def render_stickies_for_card(card):

@@ -1,49 +1,61 @@
 # dialog.py — FINAL, FLAWLESS, OBSIDIAN-LEVEL MARKDOWN EDITOR
 from aqt import mw, QDialog, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QComboBox, QSpinBox, QTextEdit, QWebEngineView, QTimer, QMessageBox, qtmajor
 from aqt.utils import tooltip
-from aqt.qt import QToolBar, QAction, QTextCursor, Qt
+from aqt.qt import QToolBar, QAction, QTextCursor, Qt, QIcon, QSize, QFont, QFontDatabase, QPixmap, QPainter, QColor
 from .storage import get_stickies, save_stickies
-import html, re
+from . import markdown2
+import html, re, os
+
+def create_icon_from_font(char_code, size=20, color="#919191"):
+    """Create a QIcon from Material Icons font character"""
+    pixmap = QPixmap(size, size)
+    pixmap.fill(Qt.GlobalColor.transparent)
+    
+    painter = QPainter(pixmap)
+    painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+    
+    font = QFont("icomoon")
+    font.setPixelSize(size)
+    painter.setFont(font)
+    painter.setPen(QColor(color))
+    
+    painter.drawText(pixmap.rect(), Qt.AlignmentFlag.AlignCenter, chr(char_code))
+    painter.end()
+    
+    return QIcon(pixmap)
 
 
 def markdown_to_html(text: str) -> str:
     if not text:
         return ""
-    text = html.escape(text).strip()
+    # Use markdown2 with extras for better compatibility
+    return markdown2.markdown(text, extras=["fenced-code-blocks", "tables", "break-on-newline", "cuddled-lists", "strike"]).strip()
 
-    text = re.sub(r'^### (.*?)$', r'<h3>\1</h3>', text, flags=re.M)
-    text = re.sub(r'^## (.*?)$', r'<h2>\1</h2>', text, flags=re.M)
-    text = re.sub(r'^# (.*?)$', r'<h1>\1</h1>', text, flags=re.M)
-    text = re.sub(r'\*\*\*(.*?)\*\*\*', r'<strong><em>\1</em></strong>', text)
-    text = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', text)
-    text = re.sub(r'\*(.*?)\*', r'<em>\1</em>', text)
-    text = re.sub(r'~~(.*?)~~', r'<del>\1</del>', text)
-    text = re.sub(r'`([^`]+)`', r'<code style="background:#333;color:#fff;padding:2px 6px;border-radius:4px;font-family:monospace;">\1</code>', text)
-    text = re.sub(r'\[([^]]+)\]\(([^)]+)\)', r'<a href="\2" style="color:#1976d2;text-decoration:underline;">\1</a>', text)
-    text = re.sub(r'^---\s*$', r'<hr style="border:0;border-top:2px solid #999;margin:20px 0;">', text, flags=re.M)
 
-    lines = text.split('\n')
-    in_list = False
-    result = []
-    for line in lines:
-        stripped = line.lstrip()
-        if stripped.startswith(('- ', '* ', '• ')):
-            item = stripped[2:].strip()
-            if not in_list:
-                result.append('<ul style="margin:12px 0;padding-left:24px;list-style:disc;">')
-                in_list = True
-            result.append(f'<li>{item}</li>')
-        else:
-            if in_list:
-                result.append('</ul>')
-                in_list = False
-            result.append(line)
-    if in_list:
-        result.append('</ul>')
-
-    text = '\n'.join(result)
-    text = re.sub(r'(?<!>)\n(?!\s*(</ul>|</?li>))', '<br>', text)
-    return text
+class MarkdownTextEdit(QTextEdit):
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key.Key_Return:
+            cursor = self.textCursor()
+            block = cursor.block()
+            text = block.text()
+            # Check for list markers
+            match = re.match(r'^(\s*)([-*•])\s', text)
+            if match:
+                indent, marker = match.groups()
+                # If line is just the marker, remove it (exit list)
+                if text.strip() == marker:
+                    cursor.beginEditBlock()
+                    cursor.select(QTextCursor.SelectionType.BlockUnderCursor)
+                    cursor.removeSelectedText()
+                    cursor.insertBlock()
+                    cursor.endEditBlock()
+                else:
+                    # Continue list
+                    super().keyPressEvent(event)
+                    self.insertPlainText(f"{indent}{marker} ")
+                return
+        
+        super().keyPressEvent(event)
 
 
 class StickyDialog(QDialog):
@@ -63,6 +75,11 @@ class StickyDialog(QDialog):
         self.setWindowTitle("Edit Sticky Note" if idx is not None else "New Sticky Note")
         self.resize(1180, 760)
 
+        # Load Material Icons font
+        font_path = os.path.join(os.path.dirname(__file__), "icomoon.ttf")
+        if os.path.exists(font_path):
+            QFontDatabase.addApplicationFont(font_path)
+
         # === MAIN LAYOUT ===
         main_layout = QVBoxLayout(self)
         main_layout.setSpacing(20)
@@ -76,7 +93,6 @@ class StickyDialog(QDialog):
         colors_group = QVBoxLayout()
         colors_group.setSpacing(20)
         QLabel("Colors", self).setStyleSheet("font-weight:600; font-size:13px; padding-left:8px;")
-        # colors_group.addWidget(QLabel("Colors"))
 
         color_swatch_row = QHBoxLayout()
         color_swatch_row.setSpacing(14)
@@ -178,37 +194,89 @@ class StickyDialog(QDialog):
         top_row.addStretch()
         main_layout.addLayout(top_row)
 
-        # === TOOLBAR — All original buttons preserved ===
+        # === TOOLBAR — Material Icons Font ===
         toolbar = QToolBar()
+        toolbar.setIconSize(QSize(20, 20))
         toolbar.setStyleSheet("""
-                QToolBar { padding-top:10px; spacing:6px; }
-            QToolButton {
-                font-family:monospace;
-                border-radius:19px;
-                width:36px; height:36px; font-weight:bold; font-size:16px;
+            QToolBar {
+                padding: 6px;
+                spacing: 6px;
+                background: transparent;
+                border: none;
             }
-            QToolButton:hover { color:#007bff; }
-            QToolButton:checked { color:#007bff; background:rgba(0,123,255,0.2); }
+
+
+            QToolButton {
+                color: palette(window-text);
+                background: transparent;
+                border-radius: 6px;
+                padding: 6px 8px;
+                border: none;
+            }
+
+            QToolButton:hover {
+                background: rgba(128, 128, 128, 0.12);
+            }
+
+            QToolButton:checked {
+                background: rgba(0, 123, 255, 0.20);
+                border: none;
+                color: #007BFF;
+            }
+
+            QToolButton:focus {
+                outline: none;
+                border: none;
+            }
+
         """)
 
         self.buttons = {}
-        def add_btn(text, tip, open_tag="", close_tag="", prefix=""):
-            act = QAction(text, self)
-            act.setToolTip(tip)
+        
+        # Material Icons Unicode codepoints
+        MATERIAL_ICONS = {
+            "bold": 0xe905,           # format_bold
+            "italic": 0xe904,         # format_italic
+            "strikethrough": 0xe906,  # strikethrough_s
+            "h1": 0xe90a,             # looks_one (number 1)
+            "h2": 0xe909,             # looks_two (number 2)
+            "h3": 0xe908,             # looks_3 (number 3)
+            "list": 0xe903,           # format_list_bulleted
+            "code": 0xe901,           # code
+            "link": 0xe902,           # link
+            "quote": 0xe900,          # format_quote
+            "hr": 0xe907,             # horizontal_rule
+        }
+        
+        def add_btn(text, tip, open_tag="", close_tag="", prefix="", shortcut=None, icon_code=None):
+            if icon_code and icon_code in MATERIAL_ICONS:
+                # Create icon with normal color
+                icon = create_icon_from_font(MATERIAL_ICONS[icon_code], 20, "#919191")
+                act = QAction(icon, "", self)
+            else:
+                # Fallback to text
+                act = QAction(text, self)
+            
+            act.setToolTip(tip + (f" ({shortcut})" if shortcut else ""))
             act.setCheckable(True)
+            if shortcut:
+                act.setShortcut(shortcut)
             act.triggered.connect(lambda: self.toggle_format(open_tag, close_tag, prefix))
             toolbar.addAction(act)
             self.buttons[text] = act
 
-        add_btn("B", "Bold", "**", "**")
-        add_btn("I", "Italic", "*", "*")
-        add_btn("S", "Strikethrough", "~~", "~~")
-        add_btn("H1", "Heading 1", prefix="# ")
-        add_btn("H2", "Heading 2", prefix="## ")
-        add_btn("H3", "Heading 3", prefix="### ")
-        add_btn("List", "Bullet List", prefix="- ")
-        add_btn("`", "Inline Code", "`", "`")
-        add_btn("Link", "Insert Link", "[link", "](url here)")
+        # Add toolbar buttons with Material Icons
+        add_btn("B", "Bold", "**", "**", shortcut="Ctrl+B", icon_code="bold")
+        add_btn("I", "Italic", "*", "*", shortcut="Ctrl+I", icon_code="italic")
+        add_btn("S", "Strikethrough", "~~", "~~", shortcut="Ctrl+Shift+X", icon_code="strikethrough")
+        add_btn("H1", "Heading 1", prefix="# ", shortcut="Alt+1", icon_code="h1")
+        add_btn("H2", "Heading 2", prefix="## ", shortcut="Alt+2", icon_code="h2")
+        add_btn("H3", "Heading 3", prefix="### ", shortcut="Alt+3", icon_code="h3")
+        add_btn("List", "Bullet List", prefix="- ", shortcut="Ctrl+Shift+L", icon_code="list")
+        add_btn("`", "Inline Code", "`", "`", shortcut="Ctrl+`", icon_code="code")
+        add_btn("Link", "Insert Link", "[link", "](url here)", shortcut="Ctrl+K", icon_code="link")
+        add_btn("Qt", "Blockquote", prefix="> ", shortcut="Ctrl+Shift+Q", icon_code="quote")
+        add_btn("---", "Horizontal Rule", "\n---\n", "", shortcut="Ctrl+Shift+H", icon_code="hr")
 
         main_layout.addWidget(toolbar)
 
@@ -216,7 +284,7 @@ class StickyDialog(QDialog):
         split = QHBoxLayout()
         split.setSpacing(20)
 
-        self.editor = QTextEdit()
+        self.editor = MarkdownTextEdit()
         self.editor.setPlainText(self.sticky.get("data", ""))
         self.editor.setStyleSheet("""
             QTextEdit {
@@ -229,7 +297,7 @@ class StickyDialog(QDialog):
         split.addWidget(self.editor, 1)
 
         self.preview = QWebEngineView()
-        self.preview.setStyleSheet("border-radius:14px; overflow:hidden;")
+        self.preview.setStyleSheet("border-radius:14px;")
         split.addWidget(self.preview, 1)
 
         main_layout.addLayout(split, 1)
@@ -311,14 +379,38 @@ class StickyDialog(QDialog):
         pos = cursor.position() - block.position()
         line_start = text[:pos].lstrip()
 
+        # Check for inline formatting
         self.buttons["B"].setChecked(bool(selected.startswith("**") and selected.endswith("**")))
         self.buttons["I"].setChecked(bool(selected.startswith("*") and selected.endswith("*") and not (selected.startswith("**") or selected.startswith("***"))))
         self.buttons["S"].setChecked(bool(selected.startswith("~~") and selected.endswith("~~")))
         self.buttons["`"].setChecked(bool(selected.startswith("`") and selected.endswith("`")))
+        
+        # Check for block-level formatting
         self.buttons["H1"].setChecked(line_start.startswith("# ") and not line_start.startswith("##"))
         self.buttons["H2"].setChecked(line_start.startswith("## ") and not line_start.startswith("###"))
         self.buttons["H3"].setChecked(line_start.startswith("### "))
         self.buttons["List"].setChecked(any(line_start.startswith(p) for p in ["- ", "* ", "• "]))
+        self.buttons["Qt"].setChecked(line_start.startswith("> "))
+        
+        # Link button: check if cursor is within a markdown link
+        link_pattern = r'\[([^\]]+)\]\(([^\)]+)\)'
+        is_in_link = False
+        if selected:
+            is_in_link = bool(re.match(link_pattern, selected))
+        else:
+            # Check if cursor is within a link in the current line
+            line_text = block.text()
+            for match in re.finditer(link_pattern, line_text):
+                start, end = match.span()
+                cursor_pos_in_line = cursor.position() - block.position()
+                if start <= cursor_pos_in_line <= end:
+                    is_in_link = True
+                    break
+        self.buttons["Link"].setChecked(is_in_link)
+        
+        # Horizontal rule button: check if current line is a horizontal rule
+        is_hr = text.strip() in ["---", "***", "___"]
+        self.buttons["---"].setChecked(is_hr)
 
     def update_preview(self):
         raw = self.editor.toPlainText()
@@ -327,7 +419,7 @@ class StickyDialog(QDialog):
 
         html = f"""
         <html><head><style>
-            body {{background:#333333; overflow:hidden; border-radius:12px; display:flex; justify-content:center; align-items:center; padding:50px; margin:0;}}
+            body {{background:#333333; border-radius:12px; display:flex; justify-content:center; align-items:center; padding:50px; margin:0;}}
             .note {{
                 background:{bg}; color:#1a1a1a; padding:24px; border-radius:18px;
                 width:{self.w.value()}px; 
@@ -337,6 +429,20 @@ class StickyDialog(QDialog):
                 line-height:1.33;
             }}
             .note:empty:before {{ content:"This is your note preview"; color:#aaa; font-style:italic; }}
+            
+            /* Markdown2 specific styles */
+            code {{ background:rgba(0,0,0,0.1); padding:2px 4px; border-radius:3px; font-family:monospace; }}
+            pre {{ background:rgba(0,0,0,0.1); padding:10px; border-radius:5px; overflow-x:auto; }}
+            blockquote {{ 
+                border-left: 4px solid rgba(0, 0, 0, 0.2);
+                margin: 8px 0;
+                padding-left: 12px;
+                color: rgba(0, 0, 0, 0.6);
+                font-style: italic;
+            }}
+            table {{ border-collapse: collapse; width: 100%; }}
+            th, td {{ border: 1px solid #ddd; padding: 8px; }}
+            th {{ background-color: rgba(0,0,0,0.05); }}
         </style></head><body>
             <div class="note">{rendered or "<em>This is your note preview</em>"}</div>
         </body></html>
