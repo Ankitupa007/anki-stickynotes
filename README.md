@@ -2,7 +2,7 @@
 
 **A powerful, Markdown-enabled sticky notes add-on for Anki with an intuitive live preview editor.**
 
-![Preview](https://i.imgur.com/UCyItw0.jpeg)
+![Preview](https://i.imgur.com/mZqeKtF.gif)
 
 ## Installation
 
@@ -103,6 +103,8 @@ Here is an example of sticky notes stored for a card with ID `1763368231436`:
 Sticky notes can be imported or exported as JSON files, specific to decks. You can import/export all sticky notes belonging to a particular deck.
 
 ### Automatic Grid Layout
+
+![Preview](https://i.imgur.com/51U47Oi.gif)
 
 Notes are automatically arranged using a clean grid layout—no overlaps, no manual dragging required.
 
