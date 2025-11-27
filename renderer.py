@@ -55,7 +55,7 @@ def render_stickies_for_card(card):
         w = s.get("width",300)
         h = s.get("height",150)
         fs = s.get("font_size",16)
-        ff = s.get("font_family","Verdana")
+        ff = s.get("font_family","Comic Sans MS")
         content = markdown_to_html(s.get("data",""))
 
         html += f'''

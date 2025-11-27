@@ -4,7 +4,7 @@ from aqt.qt import QAction
 from aqt.utils import  getOnlyText, showInfo, tooltip, askUser
 import json
 import time
-from .dialog import StickyDialog
+from .dialog import StickyDialog, extract_image_filenames
 from .renderer import render_stickies_for_card
 from .storage import init_storage, get_stickies as get, save_stickies as put
 import os, shutil
@@ -48,6 +48,14 @@ def js(handled, msg, ctx):
         else:
             data = get(card.note().id)
             if 0 <= idx < len(data):
+                # Smart deletion: remove associated images
+                sticky_note = data[idx]
+                text = sticky_note.get("data", "")
+                images = extract_image_filenames(text)
+                to_delete = [img for img in images if img.startswith("_sticky_")]
+                if to_delete:
+                    mw.col.media.trash_files(to_delete)
+                
                 data.pop(idx)
                 put(card.note().id, data)
                 mw.reviewer._redraw_current_card()
@@ -289,7 +297,6 @@ def show_about_dialog():
             QPushButton {
                 text-align: left;
                 padding: 20px 20px;
-                # border: 1px solid #ddd;
                 border-radius: 4px;
                 font-size: 12px;
             }

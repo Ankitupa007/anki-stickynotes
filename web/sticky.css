@@ -1,17 +1,18 @@
-
 /* Flexbox Layout Container */
-#anki-sticky-container{
+#anki-sticky-container {
   margin-top: 2rem;
-  width:100%;
+  width: 100%;
   /* display: flex; */
-  max-width:1920px;
+  max-width: 1920px;
 }
+
+
+
 /* Sticky Card */
 .anki-sticky {
   color: #171717;
   margin: 8px;
-  padding: 16px;
-  padding-bottom: 24px;
+  padding: 0 14px;
   border: none;
   text-align: left;
   border-radius: 12px;
@@ -23,8 +24,14 @@
   overflow-wrap: break-word;
   width: 300px;
   line-height: 1.5;
-  position:relative;
+  position: relative;
   /* transition: box-shadow 0.2s ease; */
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
 }
 
 /* .anki-sticky:hover {
@@ -65,21 +72,22 @@
   background: linear-gradient(180deg, #404146 0%, #272729 100%);
   cursor: pointer;
 }
+
 .sticky-btn:hover {
   background: linear-gradient(180deg, #505156 0%, #373739 100%);
   transform: none;
   transition: none;
 }
 
-/* Content Styling */
 .sticky-content {
-  padding-right: 24px;
-  line-height: 1.5;
+  /* padding-right: 24px; */
+  line-height: 1.33;
   /* font-size: 14px !important; */
   /* font-family: inherit !important; */
   /* font-weight: normal !important; */
 }
 
+/*
 .sticky-content *,
 .sticky-content h1,
 .sticky-content h2,
@@ -92,18 +100,19 @@
   font-family: inherit !important;
 }
 
-.sticky-content hr{
+.sticky-content hr {
   border: none;
   border-top: 1px solid #171717;
   margin: 8px 0;
 }
+
 .sticky-content h1,
 .sticky-content h2,
 .sticky-content h3 {
-  margin: 0 0 8px 0;
+  margin: 0 0 8 0;
   font-weight: 600 !important;
   color: #222;
-}
+} */
 
 /* .sticky-content h1 {
   font-size: 1.3em !important;
@@ -116,7 +125,7 @@
 .sticky-content h3 {
   font-size: 1.1em !important;
 } */
-
+/* 
 .sticky-content strong {
   font-weight: 600 !important;
   color: #000;
@@ -137,17 +146,20 @@
 }
 
 .sticky-content ul {
-  margin: 6px 0;
+  margin: 0 6px;
   padding-left: 20px;
 }
 
 .sticky-content li {
-  margin: 4px 0;
+  margin: 0 6px;
 }
+
+*/
+
 
 .sticky-content a {
   color: #1976d2;
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 .sticky-content a:hover {
@@ -195,9 +207,11 @@
 .anki-sticky:nth-child(2) {
   animation-delay: 0.1s;
 }
+
 .anki-sticky:nth-child(3) {
   animation-delay: 0.2s;
 }
+
 .anki-sticky:nth-child(4) {
   animation-delay: 0.3s;
 }
@@ -207,6 +221,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
