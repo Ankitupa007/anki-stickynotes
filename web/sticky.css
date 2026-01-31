@@ -87,83 +87,45 @@ img {
   /* font-weight: normal !important; */
 }
 
-/*
-.sticky-content *,
-.sticky-content h1,
-.sticky-content h2,
-.sticky-content h3,
-.sticky-content p,
-.sticky-content div,
-.sticky-content span,
-.sticky-content li,
-.sticky-content a {
-  font-family: inherit !important;
-}
-
-.sticky-content hr {
-  border: none;
-  border-top: 1px solid #171717;
-  margin: 8px 0;
-}
-
-.sticky-content h1,
-.sticky-content h2,
-.sticky-content h3 {
-  margin: 0 0 8 0;
-  font-weight: 600 !important;
-  color: #222;
-} */
-
-/* .sticky-content h1 {
-  font-size: 1.3em !important;
-}
-
-.sticky-content h2 {
-  font-size: 1.2em !important;
-}
-
-.sticky-content h3 {
-  font-size: 1.1em !important;
-} */
-/* 
-.sticky-content strong {
-  font-weight: 600 !important;
-  color: #000;
-}
-
-.sticky-content em {
-  font-style: italic !important;
-  color: #444;
-}
-
-.sticky-content code {
-  background-color: #f5f5f5;
-  padding: 2px 4px;
-  border-radius: 4px;
-  font-family: "Liberation Mono", "DejaVu Sans Mono", "Ubuntu Mono",
-    "Courier New", Courier, monospace !important;
-  font-size: 0.9em !important;
-}
-
-.sticky-content ul {
-  margin: 0 6px;
-  padding-left: 20px;
-}
-
-.sticky-content li {
-  margin: 0 6px;
-}
-
-*/
-
-
-.sticky-content a {
-  color: #1976d2;
-  text-decoration: underline;
-}
 
 .sticky-content a:hover {
   text-decoration: underline;
+}
+
+/* Markdown Elements */
+.sticky-content table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 12px 0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.sticky-content th,
+.sticky-content td {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.sticky-content th {
+  background-color: rgba(0, 0, 0, 0.05);
+  /* font-weight: 600; */
+}
+
+.sticky-content pre {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 12px 0;
+}
+
+.sticky-content code {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-family: monospace;
 }
 
 .sticky-content blockquote {

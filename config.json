@@ -1,0 +1,51 @@
+{
+    "default_color": "yellow",
+    "default_font_size": 16,
+    "default_font_family": "Comic Sans MS",
+    "default_width": 300,
+    "default_height": 150,
+    "default_bold": false,
+    "default_italic": false,
+    "presets": {
+        "Small": {
+            "color": "yellow",
+            "font_size": 16,
+            "font_family": "Comic Sans MS",
+            "width": 150,
+            "height": 150,
+            "bold": false,
+            "italic": false
+        },
+        "Tall": {
+            "color": "green",
+            "font_size": 16,
+            "font_family": "Comic Sans MS",
+            "width": 150,
+            "height": 300,
+            "bold": false,
+            "italic": false
+        },
+        "Wide": {
+            "color": "pink",
+            "font_size": 16,
+            "font_family": "Comic Sans MS",
+            "width": 300,
+            "height": 150,
+            "bold": false,
+            "italic": false
+        },
+        "Large": {
+            "color": "blue",
+            "font_size": 14,
+            "font_family": "Georgia",
+            "width": 300,
+            "height": 300,
+            "bold": false,
+            "italic": true
+        }
+    },
+    "templates": {
+        "Todo": "### ✅ To-Do\n- [ ] Task 1\n- [ ] Task 2\n- [ ] Task 3",
+        "Table": "| Key | Note |\n|-----|------|\n|     |      |\n|     |      |"
+    }
+}

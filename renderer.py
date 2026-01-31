@@ -56,11 +56,17 @@ def render_stickies_for_card(card):
         h = s.get("height",150)
         fs = s.get("font_size",16)
         ff = s.get("font_family","Comic Sans MS")
+        is_bold = s.get("bold", False)
+        is_italic = s.get("italic", False)
+        
+        weight = "bold" if is_bold else "normal"
+        style = "italic" if is_italic else "normal"
+        
         content = markdown_to_html(s.get("data",""))
 
         html += f'''
         <div class="anki-sticky {color}" style="width:{w}px;min-height:{h}px;">
-            <div class="sticky-content" style="font-size:{fs}px;font-family:'{ff}'">
+            <div class="sticky-content" style="font-size:{fs}px;font-family:'{ff}';font-weight:{weight};font-style:{style};">
                 {content}
             </div>
             <div class="sticky-controls">

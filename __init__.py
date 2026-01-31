@@ -62,28 +62,23 @@ def js(handled, msg, ctx):
         return (True, None)
     return handled
 
-def setup_shortcuts(reviewer):
-    # Only create once (bulletproof GC protection)
-    if hasattr(reviewer.web, "_sticky_shortcut"):
-        return
-    
-    def open_dialog():
-        if not reviewer.card:
-            return
-        from .dialog import StickyDialog
-        dialog = StickyDialog(reviewer.card)
-        dialog.show()
-    
-    # Attach to reviewer.web (the QWebEngineView) — fixes PyQt6 TypeError
-    shortcut = QShortcut(QKeySequence("Ctrl+Shift+S"), reviewer.web)
-    shortcut.activated.connect(open_dialog)
-    reviewer.web._sticky_shortcut = shortcut  # Prevent garbage collection
 
 
 def add_top_level_menu():
     # Create a top-level menu called "Sticky Notes"
     sticky_menu = QMenu("&Sticky Notes", mw)  # &S makes Alt+S the shortcut
     mw.form.menubar.addMenu(sticky_menu)
+
+    # Add Sticky Note action (shows shortcut to users)
+    add_note_act = QAction("Add Sticky Note\tCtrl+Shift+S", mw)
+    def open_sticky_dialog():
+        if hasattr(mw, 'reviewer') and mw.reviewer and mw.reviewer.card:
+            from .dialog import StickyDialog
+            StickyDialog(mw.reviewer.card).show()
+    add_note_act.triggered.connect(open_sticky_dialog)
+    sticky_menu.addAction(add_note_act)
+    
+    sticky_menu.addSeparator()
 
     # Export action
     export_act = QAction("Export Sticky Notes from Deck…", mw)
@@ -562,7 +557,30 @@ def perform_import(export_data: dict, deck_name: str):
     tooltip(f"Successfully imported {imported} sticky note(s) into\n'{deck_name}'!")
 
 
+
+def init_sticky_shortcut():
+    """Initialize keyboard shortcut when profile loads"""
+    if hasattr(mw, "_sticky_shortcut_setup"):
+        return
+    
+    def open_dialog():
+        if not hasattr(mw, 'reviewer') or not mw.reviewer or not mw.reviewer.card:
+            tooltip("Please open a card in review mode first")
+            return
+        from .dialog import StickyDialog
+        dialog = StickyDialog(mw.reviewer.card)
+        dialog.show()
+    
+    # Create shortcut attached to main window
+    shortcut = QShortcut(QKeySequence("Ctrl+Shift+S"), mw)
+    shortcut.setContext(Qt.ShortcutContext.ApplicationShortcut)
+    shortcut.activated.connect(open_dialog)
+    
+    # Store reference to prevent garbage collection
+    mw._sticky_shortcut = shortcut
+    mw._sticky_shortcut_setup = True
+
 add_top_level_menu()
 
-gui_hooks.reviewer_did_init.append(setup_shortcuts)
+gui_hooks.profile_did_open.append(init_sticky_shortcut)
 gui_hooks.webview_did_receive_js_message.append(js)
