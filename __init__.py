@@ -261,7 +261,7 @@ def show_about_dialog():
     title.setStyleSheet("font-weight: bold;")
     layout.addWidget(title)
     
-    version = QLabel("Version 1.8.0")
+    version = QLabel("Version 2.0.0")
     version.setStyleSheet("font-size: 13px; color: #aaa;")
     layout.addWidget(version)
     
